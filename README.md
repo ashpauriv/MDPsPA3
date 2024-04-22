@@ -1,7 +1,9 @@
 # MDPsPA3
-CS 4320/5314
-PA3: Solving MDPs
-DUE: Friday, May 3 at 11:59 PM
+## CS 4320/5314
+
+## PA3: Solving MDPs
+
+## DUE: Friday, May 3 at 11:59 PM
 
 Groups: You may optionally work in a group of two for this assignment. Turn in only one copy per group, clearly listing all team members.  In your writeup you should including a brief discussion of what the contributions of each individual team member were towards the final submission.  It is expected that each team member will contribute significantly towards the design, coding, testing, and documentation aspects of the project.  Paired coding and similar approaches are encouraged. 
 
@@ -10,21 +12,33 @@ Objective: To experiment with some of the basic algorithms for solving MDPs on a
 Domain: The domain is based on a simple MDP originally designed by Rich Sutton at the University of Alberta. The example describes a Markov Decision Process that models the life of a student and the decisions one must make to both have a good time and remain in good academic standing.
 
 States:
+
 R = Rested
+
 T = Tired
+
 D = homework Done
+
 U = homework Undone
+
 8p = eight o'clock pm
 
 Actions:
+
 P = Party
+
 R = Rest
+
 S = Study
+
 any means any action has the same effect
+
 note: not all actions are possible in all states
 
 Red numbers are rewards
+
 Green numbers are transition probabilities (all those not labeled are probability 1.0)
+
 The gray rectangle denotes a terminal state.
 
 See the following page for the diagram of the MDP. 
@@ -50,5 +64,6 @@ Implement Q-learning and use it to find the optimal policy for this MDP.  Note t
 Each time you update a Q value, print out the previous value, the new value, the immediate reward, and the Q value for the next state.  At the end, print out the number of episodes, the final Q values, and the optimal policy.  
 
 Submit via blackboard in a single zip file: 
+
 •	The traces from each of your runs for parts I-III in readable form, and clearly labeling the final values.
 •	Your source code 
