@@ -1,5 +1,5 @@
 # I got the following from Chat, there are likely errors; We can start from scratch if you want to, I just put this as a guide
-# To begin, we'll implement the MDP based on the image you've uploaded. 
+# To begin, we'll implement the MDP
 # It provides the states, actions, rewards, and transition probabilities. 
 # We will start with the Monte Carlo method as outlined in Part I.
 # First, we need to code the MDP structure from the image. 
