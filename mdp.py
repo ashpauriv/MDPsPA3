@@ -152,7 +152,7 @@ Would you like to go ahead with that?
 import numpy as np
 
 # Initialize Q-values
-Q = {(state, action): 0 for state in states for action in actions[state]}
+Q = {(state, action): 0 for state in states for action in actions.get(state, [])}
 alpha = 0.2  # Initial learning rate
 alpha_decay = 0.995  # Decay rate for the learning rate
 gamma = 0.99  # Discount factor
@@ -161,36 +161,43 @@ threshold = 0.001  # Threshold for the maximum change in Q-value to consider the
 
 # Choose an action using an epsilon-greedy policy
 def choose_action_epsilon_greedy(state, epsilon):
+    if not actions[state]:  # Check if there are no actions available (terminal state)
+        return None  # Return None or a suitable indicator for no action
     if np.random.rand() < epsilon:
         return random.choice(actions[state])
     else:
         q_values = {action: Q[(state, action)] for action in actions[state]}
         max_value = max(q_values.values())
-        # In case multiple actions have the same max value, choose randomly among them
         max_actions = [action for action, value in q_values.items() if value == max_value]
         return random.choice(max_actions)
 
 # Q-learning algorithm
 def q_learning(episodes):
+    global alpha  # Ensure that we are modifying the global alpha variable
     for episode in range(episodes):
         state = 'Rested'  # assuming the student starts from 'Rested'
-        max_change = float('inf')
-        while max_change >= threshold and state != '8pm':
+        while state != '8pm':  # Assuming '8pm' is your terminal state
             action = choose_action_epsilon_greedy(state, epsilon)
-            next_state, reward, trans_prob = transitions[(state, action)][0]  # Assuming deterministic transitions for simplicity
+            if action is None:  # If no action is possible, break the loop
+                break
+            next_state, reward, _ = transitions.get((state, action), [(state, 0, 0)])[0]  # Access the first tuple from the list
             old_value = Q[(state, action)]
-            # Q-learning update
-            next_max = max(Q[(next_state, a)] for a in actions[next_state]) if next_state in actions else 0
+
+            # Safely get the next Q-values, ensuring only valid actions are considered
+            next_max = max((Q.get((next_state, a), 0) for a in actions.get(next_state, [])), default=0)
             Q[(state, action)] = old_value + alpha * (reward + gamma * next_max - old_value)
-            max_change = max(max_change, abs(Q[(state, action)] - old_value))
             state = next_state
-        # Decay learning rate
-        alpha *= alpha_decay
-        print(f"Episode {episode+1}: Alpha: {alpha:.4f}, Max Change in Q-value: {max_change:.4f}")
 
-    # Derive policy from Q-values
-    optimal_policy = {state: max(actions[state], key=lambda action: Q[(state, action)]) for state in states if actions[state]}
+        alpha *= alpha_decay  # Decay learning rate
+        if episode % 10 == 0:  # Print every 10 episodes, for example
+            print(f"Episode {episode+1}: Alpha: {alpha:.4f}")
 
+    # Derive policy from Q-values safely by checking if actions are available
+    optimal_policy = {
+        state: max(actions.get(state, []), key=lambda action: Q.get((state, action), 0), default=None)
+        for state in states if state != '8pm'
+    }
+    
     print(f"Final Q-values: {Q}")
     print(f"Optimal Policy: {optimal_policy}")
 
