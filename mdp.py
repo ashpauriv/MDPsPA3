@@ -1,4 +1,3 @@
-# I got the following from Chat, there are likely errors; We can start from scratch if you want to, I just put this as a guide
 # To begin, we'll implement the MDP
 # It provides the states, actions, rewards, and transition probabilities. 
 # We will start with the Monte Carlo method as outlined in Part I.
@@ -9,6 +8,9 @@
 
 import numpy as np
 import random
+import matplotlib.pyplot as plt
+
+
 
 # State definitions
 states = ['Rested', 'Tired', 'Homework Done', 'Homework Undone', '8pm']
@@ -35,6 +37,7 @@ transitions = {
 
 # Initialize state values and policy
 state_values = {state: 0 for state in states}
+state_values_history = {state: [] for state in states}  # For recording values
 policy = {state: [1.0 / len(actions[state]) if state in actions else 0 for action in actions[state]] for state in states}
 
 # Helper function to choose an action based on the policy
@@ -56,7 +59,9 @@ def run_episode(policy):
         state = next_state
     return episode
 
-# Monte Carlo function to evaluate the policy
+state_values_history = {state: [] for state in states}
+
+# monte Carlo function to evaluate the policy
 def monte_carlo(policy, episodes=50, alpha=0.1):
     for i in range(episodes):
         episode = run_episode(policy)
@@ -66,11 +71,21 @@ def monte_carlo(policy, episodes=50, alpha=0.1):
             first_visit_idx = next(i for i, x in enumerate(episode) if x[0] == state)
             G = sum(x[2] for x in episode[first_visit_idx:])
             state_values[state] += alpha * (G - state_values[state])
+            state_values_history[state].append(state_values[state])  # Correctly append the updated state value
         print(f"Episode {i+1}: Sequence {episode}, Total Reward: {total_reward}")
-    print(f"State Values: {state_values}")
+
+    # Plotting after all episodes are completed
+    for state in states:
+        plt.plot(state_values_history[state], label=state)
+    plt.xlabel('Episode')
+    plt.ylabel('State Value')
+    plt.title('State Value Progression - Monte Carlo')
+    plt.legend()
+    plt.show()
 
 # Run the Monte Carlo simulation
 monte_carlo(policy)
+
 '''
 This code sets up the MDP, runs it for 50 episodes, and uses first-visit Monte Carlo to estimate the state values. 
 The print statements at the end of the monte_carlo function will display the outcomes of each episode and the final estimated values of each state.
@@ -149,7 +164,7 @@ Would you like to go ahead with that?
 # The learning rate will decrease after each episode.
 # Here is the Python code for Q-learning:
 '''
-import numpy as np
+
 
 # Initialize Q-values
 Q = {(state, action): 0 for state in states for action in actions.get(state, [])}
