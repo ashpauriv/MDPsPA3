@@ -74,13 +74,13 @@ def monte_carlo(policy, episodes=50, alpha=0.1):
         print(f"Episode {i+1}: Sequence {episode}, Total Reward: {total_reward}")
 
     # Plotting after all episodes are completed
-    for state in states:
-        plt.plot(state_values_history[state], label=state)
-    plt.xlabel('Episode')
-    plt.ylabel('State Value')
-    plt.title('State Value Progression - Monte Carlo')
-    plt.legend()
-    plt.show()
+    #for state in states:
+       # plt.plot(state_values_history[state], label=state)
+   # plt.xlabel('Episode')
+   # plt.ylabel('State Value')
+    #plt.title('State Value Progression - Monte Carlo')
+    #plt.legend()
+   # plt.show()
 
 # Run the Monte Carlo simulation
 monte_carlo(policy)
