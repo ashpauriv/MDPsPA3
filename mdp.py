@@ -1,10 +1,9 @@
-# To begin, we'll implement the MDP
-# It provides the states, actions, rewards, and transition probabilities. 
-# We will start with the Monte Carlo method as outlined in Part I.
-# First, we need to code the MDP structure from the image. 
-# This involves setting up the states, possible actions, rewards, and transition probabilities. 
-# Then we'll run the Monte Carlo simulation for 50 episodes#, updating state values using first-visit Monte Carlo with an alpha of 0.1.
-# Let's begin by implementing the MDP structure.
+# PA3: Solving MDP's
+# Monte Carlo
+# Value Iteration
+# Q-Learning
+# Authors: Ashley Rivas, Jesus Oropeza
+# Artificial Intelligence : CS 4320
 
 import numpy as np
 import random
@@ -86,12 +85,6 @@ def monte_carlo(policy, episodes=50, alpha=0.1):
 # Run the Monte Carlo simulation
 monte_carlo(policy)
 
-'''
-This code sets up the MDP, runs it for 50 episodes, and uses first-visit Monte Carlo to estimate the state values. 
-The print statements at the end of the monte_carlo function will display the outcomes of each episode and the final estimated values of each state.
-This code will not execute in this text-based environment. 
-To run the Monte Carlo simulation, you should run this Python code on your local machine or in a cloud-based Python environment.
-'''
 ########################### Value Iteration ########################################
 
 # Value iteration is an algorithm for finding the optimal policy by iteratively improving the value function for the states of an MDP. 
@@ -149,22 +142,8 @@ def value_iteration():
 
 # Run the value iteration algorithm
 value_iteration()
-'''
-This script initializes all state values to zero and iteratively updates them until the maximum change is less than 0.001. 
-After convergence, it extracts the optimal policy from the value function.
-After you have run the value iteration and are ready, we can proceed with Part III, which is the Q-Learning implementation. 
-Would you like to go ahead with that?
-'''
-############################################ Q-learning ###########################################################
-'''
-# Q-learning is a model-free reinforcement learning algorithm to learn the value of an action in a particular state. 
-# It does not require a model of the environment and can handle problems with stochastic transitions and rewards, without requiring adaptations.
-# For our Q-learning implementation, we'll create a Q-table that holds the Q-value for each state-action pair. 
-# We will then use the update rule to improve our Q-values based on the reward received and the maximum Q-value of the next state. 
-# The learning rate will decrease after each episode.
-# Here is the Python code for Q-learning:
-'''
 
+############################################ Q-learning ###########################################################
 
 # Initialize Q-values
 Q = {(state, action): 0 for state in states for action in actions.get(state, [])}
@@ -219,11 +198,4 @@ def q_learning(episodes):
 # Run the Q-learning algorithm
 q_learning(1000)  # Number of episodes
 
-'''
-The Q-values are initialized to zero.
-The choose_action_epsilon_greedy function implements an epsilon-greedy policy, which selects the action with the highest Q-value with probability 1 - epsilon and explores a random action with probability epsilon.
-The q_learning function runs for a specified number of episodes or until the Q-values have converged, whichever comes first. The convergence check is based on whether the maximum change in any Q-value is less than the defined threshold.
-After each episode, the learning rate alpha is decayed by the alpha_decay rate.
-The final Q-values are printed along with the derived optimal policy.
-To verify the functionality, you'll need to run this Python code in your local environment or a Python notebook. The Q-learning process will output the learned Q-values and the optimal policy after convergence.
-'''
+
