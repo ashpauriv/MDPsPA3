@@ -87,10 +87,6 @@ monte_carlo(policy)
 
 ########################### Value Iteration ########################################
 
-# Value iteration is an algorithm for finding the optimal policy by iteratively improving the value function for the states of an MDP. 
-# The algorithm updates the value of each state until the changes are below a small threshold, indicating convergence to the optimal values.
-# Below is the Python implementation of value iteration for the MDP described in the image:
-# Constants for the MDP
 gamma = 0.99  # Discount factor
 theta = 0.001  # Small threshold for determining accuracy of estimation
 
